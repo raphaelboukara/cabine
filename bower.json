@@ -1,0 +1,20 @@
+{
+  "name": "cabine",
+  "version": "0.0.0",
+  "authors": [
+    "raphaelboukara <raphael.boukara@gmail.com>"
+  ],
+  "description": "Cabine Test",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1"
+  }
+}
