@@ -7,6 +7,11 @@
 
 (def noise-node (atom nil))
 
+(defn stop-noise []
+  (when @noise-node
+    (audio/stop-noise @noise-node)
+    (reset! noise-node nil)))
+
 (def cabine-state (atom {:C {:playing false :name :C :img "center_speaker.png"}
                          :L {:playing false :name :L :img "left_speaker.png"}
                          :SL {:playing false :name :SL :img "left_speaker.png"}
@@ -24,7 +29,7 @@
                                  "audyx-equipment-"
                                  (name (:name @speaker))
                                  (speaker-playing-view? (:playing @speaker)))
-                    :onClick (fn [e] (when-not (:playing @speaker) (put! play @speaker)))}
+                    :onClick (fn [e] (if (:playing @speaker) (stop-noise) (put! play @speaker)))}
         (dom/img #js {:src (str "img/" (:img @speaker))
                       :width 52})))))
 
@@ -87,9 +92,7 @@
       (let [play (om/get-state owner :play)]
         (go (loop []
           (let [speaker (<! play)]
-            (when @noise-node
-              (audio/stop-noise @noise-node)
-              (reset! noise-node nil))
+            (stop-noise)
             (reset! noise-node (audio/play-noise-in-speaker (:name speaker) cabine-state))
             (recur))))))
 
