@@ -24,7 +24,7 @@
                                  "audyx-equipment-"
                                  (name (:name @speaker))
                                  (speaker-playing-view? (:playing @speaker)))
-                    :onClick (fn [e] (put! play @speaker))}
+                    :onClick (fn [e] (when-not (:playing @speaker) (put! play @speaker)))}
         (dom/img #js {:src (str "img/" (:img @speaker))
                       :width 52})))))
 
@@ -38,20 +38,20 @@
             (get app :C)
             {:init-state {:play play}}))
         (dom/div #js {:className "row"}
-          (dom/div #js {:className "col-md-4 col-md-offset-1"}
+          (dom/div #js {:className "col-xs-4 col-xs-offset-1"}
             (om/build speaker-view
               (get app :L)
               {:init-state {:play play}}))
-          (dom/div #js {:className "col-md-4 col-md-offset-2"}
+          (dom/div #js {:className "col-xs-4 col-xs-offset-2"}
               (om/build speaker-view
                 (get app :R)
                 {:init-state {:play play}})))
           (dom/div #js {:className "row"}
-            (dom/div #js {:className "col-md-4 col-md-offset-2"}
+            (dom/div #js {:className "col-xs-4 col-xs-offset-2"}
               (om/build speaker-view
                 (get app :SL)
                 {:init-state {:play play}}))
-              (dom/div #js {:className "col-md-4"}
+              (dom/div #js {:className "col-xs-4"}
                 (om/build speaker-view
                   (get app :SR)
                   {:init-state {:play play}})))))))
@@ -63,17 +63,17 @@
       (dom/div nil
         (dom/div #js {:className "row"} nil)
         (dom/div #js {:className "row"}
-          (dom/div #js {:className "col-md-4 col-md-offset-1"}
+          (dom/div #js {:className "col-xs-4 col-xs-offset-1"}
             (om/build speaker-view
               (get app :L)
               {:init-state {:play play}}))
-          (dom/div #js {:className "col-md-4 col-md-offset-2"}
+          (dom/div #js {:className "col-xs-4 col-xs-offset-2"}
               (om/build speaker-view
                 (get app :R)
                 {:init-state {:play play}})))
         (dom/div #js {:className "row"}
-          (dom/div #js {:className "col-md-4 col-md-offset-2"} nil)
-          (dom/div #js {:className "col-md-4"} nil))))))
+          (dom/div #js {:className "col-xs-4 col-xs-offset-2"} nil)
+          (dom/div #js {:className "col-xs-4"} nil))))))
 
 (defn cabine-view [app owner]
   (reify
